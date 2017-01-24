@@ -1,0 +1,7 @@
+---
+- hosts: raspi
+  tasks:
+  - name: Update Raspberry Pi's
+    apt:
+      update_cache: yes
+      upgrade: dist
