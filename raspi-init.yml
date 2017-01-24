@@ -1,0 +1,36 @@
+---
+- hosts: raspi
+  tasks:
+  - name: Update Raspberry Pi's
+    apt:
+      upgrade: dist
+      update_cache: yes
+  - name: Reboots Raspberry Pi's
+    command: /sbin/reboot
+  - name: Wait for Raspberry Pi's to finish rebooting
+    sudo: no
+    local_action: wait_for host="{{ inventory_hostname }}" search_regex=OpenSSH port=22 timeout=300
+  - name: Install latest Git from Repositories
+    apt:
+      name: Git
+      state: latest
+  - name: Install latest Python pip from Repositories
+    apt:
+      name: python-pip
+      state: latest
+  - name: Configure Git
+    git_config:
+      name: user.name
+      scope: global
+      value: angelroybernal
+    git_config:
+      name: user.email
+      scope: global
+      value: angelroybernal@gmail.com
+    command: mkdir /home/pi/raspberrypi
+    command: git init
+      chdir: /home/pi/raspberrypi
+    git:
+      repo: https://github.com/angelroybernal/raspberrypi
+      dest: /home/pi/raspberrypi
+      clone: yes
