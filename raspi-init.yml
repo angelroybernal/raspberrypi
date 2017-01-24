@@ -28,8 +28,7 @@
       scope: global
       value: angelroybernal@gmail.com
     command: mkdir /home/pi/raspberrypi
-    command: git init
-      chdir: /home/pi/raspberrypi
+    shell: cd /home/pi/raspberrypi
     git:
       repo: https://github.com/angelroybernal/raspberrypi
       dest: /home/pi/raspberrypi
